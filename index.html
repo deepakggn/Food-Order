@@ -1,0 +1,35 @@
+<div ng-app="shop" ng-controller="mainController as mainCtrl" ng-cloak>
+  {{mainCtrl.cart.cartItems}}
+  <h1> Online Food Order Cart </h1>
+  <div class="sections" ng-repeat="section in mainCtrl.sections">
+    <h3>
+      {{section.title}}
+    </h3>
+    <p ng-if="section.items.length === 0">
+    No items at the moment.
+    </p>
+    <table ng-if="section.items.length > 0">
+      <thead>
+        <th></th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </thead>
+      <tr ng-repeat="item in section.items">
+        <td><input type="checkbox" ng-model="item.checked" ng-click="mainCtrl.cart.updateItem($event, item)"/></td>
+        <td>{{item.title}}</td>
+        <td>{{item.price | currency}}</td>
+        <td><input type="text" size="4" ng-model="item.quantity" ng-change="mainCtrl.cart.updateTotal(item)"/></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div>
+    <b>TOTAL:</b> {{mainCtrl.cart.total | currency}}
+    <br>
+    <br>
+    <button ng-click="mainCtrl.cart.checkout()">
+    Order Now
+    </button>
+  </div>  
+</div>
